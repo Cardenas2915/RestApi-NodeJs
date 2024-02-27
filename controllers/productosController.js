@@ -127,6 +127,19 @@ exports.eliminarProducto = async (req, res, next) => {
     }
 }
 
+//busqueda de un producto en especifico
+exports.buscarProducto = async (req, res, next) => {
+    try {
+         //obtener el query
+        const {query} = req.params;
+        const producto = await Productos.find({ nombre: new RegExp(query,'i') })
+        res.json(producto)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Actualizar Producto y eliminar imagen anterior
 //! se deben instalar las dependencas necesarias
 

@@ -40,12 +40,15 @@ module.exports = function() {
     productoController.actualizarProducto
     )
 
+    //busqueda de productos
+    router.post('/productos/busqueda/:query', productoController.buscarProducto)
+
     //eliminar producto
     router.delete('/productos/:idProducto', productoController.eliminarProducto)
     
     /*PEDIDOS*/
     //agrega nuevos pedidos
-    router.post('/pedidos', pedidosController.nuevoPedido);
+    router.post('/pedidos/nuevo/:idUsuario', pedidosController.nuevoPedido);
 
     // mostrar todos los pedidos 
     router.get('/pedidos', pedidosController.mostrarPedidos)
