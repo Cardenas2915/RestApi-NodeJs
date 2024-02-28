@@ -3,14 +3,21 @@ const router = express.Router()
 const clienteController = require('../controllers/clienteController')
 const productoController = require('../controllers/productosController')
 const pedidosController = require('../controllers/pedidosController')
+const usuariosController = require('../controllers/usuariosController')
 
-module.exports = function() {
+//middleware proteger las rutas
+const auth = require('../middleware/auth');
+
+module.exports = function () {
     /* CLIENTES */
     //agregar nuevos clientes via post
     router.post('/clientes', clienteController.nuevoCliente);
 
     //obtener todos los clientes
-    router.get('/clientes', clienteController.mostrarClientes)
+    router.get('/clientes',
+        auth,
+        clienteController.mostrarClientes
+    )
 
     //mustra un cliente es especifico por medio de id
     router.get('/clientes/:idCliente', clienteController.mostrarCliente)
@@ -21,11 +28,11 @@ module.exports = function() {
     //eliminar cliente
     router.delete('/clientes/:idCliente', clienteController.eliminarCliente)
 
-    /* PRODUCTOS */ 
+    /* PRODUCTOS */
     // agregar productos 
     router.post('/productos',
-    productoController.subirArchivo,
-    productoController.nuevoProducto
+        productoController.subirArchivo,
+        productoController.nuevoProducto
     )
 
     //mostrar todos los productos
@@ -36,8 +43,8 @@ module.exports = function() {
 
     //actualzarProducto
     router.put('/productos/:idProducto',
-    productoController.subirArchivo,
-    productoController.actualizarProducto
+        productoController.subirArchivo,
+        productoController.actualizarProducto
     )
 
     //busqueda de productos
@@ -45,7 +52,7 @@ module.exports = function() {
 
     //eliminar producto
     router.delete('/productos/:idProducto', productoController.eliminarProducto)
-    
+
     /*PEDIDOS*/
     //agrega nuevos pedidos
     router.post('/pedidos/nuevo/:idUsuario', pedidosController.nuevoPedido);
@@ -61,6 +68,12 @@ module.exports = function() {
 
     //eliminar pedido
     router.delete('/pedidos/:idPedido', pedidosController.eliminarPedido)
+
+
+    //usuarios
+    router.post('/crear-cuenta', usuariosController.registrarUsuario)
+
+    router.post('/iniciar-sesion', usuariosController.autenticarUsuario)
 
     return router;
 }
