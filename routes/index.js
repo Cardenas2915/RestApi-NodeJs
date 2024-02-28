@@ -11,7 +11,7 @@ const auth = require('../middleware/auth');
 module.exports = function () {
     /* CLIENTES */
     //agregar nuevos clientes via post
-    router.post('/clientes', clienteController.nuevoCliente);
+    router.post('/clientes', auth, clienteController.nuevoCliente);
 
     //obtener todos los clientes
     router.get('/clientes',
@@ -20,13 +20,13 @@ module.exports = function () {
     )
 
     //mustra un cliente es especifico por medio de id
-    router.get('/clientes/:idCliente', clienteController.mostrarCliente)
+    router.get('/clientes/:idCliente', auth, clienteController.mostrarCliente)
 
     //actualizar cliente
-    router.put('/clientes/:idCliente', clienteController.actualizarCliente)
+    router.put('/clientes/:idCliente',auth, clienteController.actualizarCliente)
 
     //eliminar cliente
-    router.delete('/clientes/:idCliente', clienteController.eliminarCliente)
+    router.delete('/clientes/:idCliente',auth, clienteController.eliminarCliente)
 
     /* PRODUCTOS */
     // agregar productos 
@@ -36,13 +36,14 @@ module.exports = function () {
     )
 
     //mostrar todos los productos
-    router.get('/productos', productoController.mostrarProductos)
+    router.get('/productos',auth, productoController.mostrarProductos)
 
     //muestra un producto es espcfico por su id
     router.get('/productos/:idProducto', productoController.mostrarProducto)
 
     //actualzarProducto
     router.put('/productos/:idProducto',
+        
         productoController.subirArchivo,
         productoController.actualizarProducto
     )
